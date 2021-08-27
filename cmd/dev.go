@@ -813,7 +813,7 @@ func getContainerConfigs(client *client.Client, options nhost.Configuration) ([]
 		fmt.Sprintf("HASURA_GRAPHQL_GRAPHQL_URL=%v", fmt.Sprintf(`http://%s:%v/v1/graphql`, getContainerName("hasura"), hasuraConfig.Port)),
 		fmt.Sprintf("HASURA_GRAPHQL_JWT_SECRET=%v", fmt.Sprintf(`{"type":"HS256", "key": "%v"}`, jwtKey)),
 		fmt.Sprintf("AUTH_PORT=%v", authConfig.Port),
-		fmt.Sprintf("AUTH_SERVER_URL=http://localhost:%v", authConfig.Port),
+		"AUTH_SERVER_URL=http://localhost:8888/auth",
 		fmt.Sprintf("AUTH_CLIENT_URL=http://localhost:%v", "3000"),
 
 		// set the defaults
