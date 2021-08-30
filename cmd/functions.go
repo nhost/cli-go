@@ -492,6 +492,11 @@ func (function *Function) BuildNodePackage() error {
 	nodeServerCode = fmt.Sprintf(`
 const express = require('%s');
 const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.disable('x-powered-by');
+
 let func;
 const requiredFile = require('%s')
 
@@ -504,7 +509,7 @@ if (typeof requiredFile === "function") {
 }
 
 app.all('%s', func);
-	
+
 app.listen(%d);`, filepath.Join(buildDir, "node_modules", "express"), function.Build, function.Route, jsPort)
 
 	return nil
