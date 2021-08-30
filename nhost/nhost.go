@@ -13,6 +13,7 @@ import (
 	"strings"
 
 	log "github.com/sirupsen/logrus"
+	"github.com/subosito/gotenv"
 
 	"gopkg.in/yaml.v2"
 )
@@ -65,16 +66,14 @@ func Env() ([]string, error) {
 		return nil, err
 	}
 
-	var response []string
+	pairs := gotenv.Parse(strings.NewReader(string(data)))
+	envs := []string{}
 
-	split := strings.Split(string(data), "=")
-	for _, item := range split {
-		if strings.Contains(item, "=") {
-			response = append(response, item)
-		}
+	for key,value := range pairs {
+		envs = append(envs, fmt.Sprintf("%s=%s", key, value))
 	}
 
-	return response, nil
+	return envs, nil
 }
 
 func Exists() bool {
